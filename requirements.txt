@@ -1,0 +1,15 @@
+# Versions used for the paper (Python 3.11). Install PyTorch first:
+#   pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
+numpy==1.26.4
+opencv-python==4.9.0.80
+scipy==1.17.1
+PyYAML==6.0.3
+# ByteTrack tracker dependencies
+lap==0.5.13
+Cython==3.2.8
+cython_bbox==0.1.5
+# imported by the ByteTrack / YOLOX packages
+loguru==0.7.3
+thop==0.1.1.post2209072238
+tabulate==0.10.0
+psutil==7.2.2

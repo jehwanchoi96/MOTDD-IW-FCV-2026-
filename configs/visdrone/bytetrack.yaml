@@ -1,0 +1,36 @@
+# ByteTrack baseline (no CMC, no SAAC, no PGR) -- VisDrone-MOT.
+# Primary detections: YOLOX-s fine-tuned on VisDrone-MOT (conf 0.001, NMS IoU 0.65).
+name: bytetrack
+benchmark: VisDrone-MOT
+tracker: bytetrack            # official BYTETracker
+frame_rate: 30
+seed: 42
+
+bytetrack:
+  track_thresh: 0.5
+  track_buffer: 30
+  match_thresh: 0.8
+  mot20: false
+
+data:
+  seq_root: "{DATA_ROOT}/VisDrone-MOT-test-dev"          # <seq>/seqinfo.ini, <seq>/img1/
+  det_file: "{DET_ROOT}/VisDrone-MOT/{seq}.txt"
+  # 17 test-dev sequences
+  sequences:
+    - "uav0000009_03358_v"
+    - "uav0000073_00600_v"
+    - "uav0000073_04464_v"
+    - "uav0000077_00720_v"
+    - "uav0000088_00290_v"
+    - "uav0000119_02301_v"
+    - "uav0000120_04775_v"
+    - "uav0000161_00000_v"
+    - "uav0000188_00000_v"
+    - "uav0000201_00000_v"
+    - "uav0000249_00001_v"
+    - "uav0000249_02688_v"
+    - "uav0000297_00000_v"
+    - "uav0000297_02761_v"
+    - "uav0000306_00230_v"
+    - "uav0000355_00001_v"
+    - "uav0000370_00001_v"

@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# third-party code bases (cloned locally, see third_party/README.md)
+third_party/*
+!third_party/README.md
+
+# data, detections, weights and outputs are never committed
+# (no trailing slash: also matches symlinks)
+/data
+/detections
+/weights
+/outputs
+*.pth
+*.pt
+*.onnx
+*.engine

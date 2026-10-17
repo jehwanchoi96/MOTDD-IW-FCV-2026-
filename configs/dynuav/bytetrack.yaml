@@ -1,0 +1,30 @@
+# ByteTrack baseline (no CMC, no SAAC, no PGR) -- DynUAV.
+# Primary detections: benchmark-provided detections distributed with DynUAV (<seq>/det/det.txt).
+name: bytetrack
+benchmark: DynUAV
+tracker: bytetrack            # official BYTETracker
+frame_rate: 30
+seed: 42
+
+bytetrack:
+  track_thresh: 0.5
+  track_buffer: 30
+  match_thresh: 0.8
+  mot20: false
+
+data:
+  seq_root: "{DATA_ROOT}/DynUAV"          # <seq>/seqinfo.ini, <seq>/img1/
+  det_file: "{DATA_ROOT}/DynUAV/{seq}/det/det.txt"
+  # 11 evaluation sequences (val: 001 014 018 040; test: 004 009 016 027 029 055 067)
+  sequences:
+    - "001"
+    - "004"
+    - "009"
+    - "014"
+    - "016"
+    - "018"
+    - "027"
+    - "029"
+    - "040"
+    - "055"
+    - "067"

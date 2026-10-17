@@ -1,0 +1,57 @@
+# Full system: CMC + SAAC + PGR -- DynUAV.
+# Primary detections: benchmark-provided detections distributed with DynUAV (<seq>/det/det.txt).
+name: full
+benchmark: DynUAV
+tracker: motdd
+frame_rate: 30
+seed: 42
+
+bytetrack:
+  track_thresh: 0.5
+  track_buffer: 30
+  match_thresh: 0.8
+  mot20: false
+
+cmc:                          # ORB + MAGSAC++ homography, warps the Kalman priors
+  enable: true
+  max_features: 1000
+  min_inliers: 20             # identity homography below this inlier count
+
+saac:                         # alpha(s) = clip((s - 8) / 32, 0, 1), stages 1 and 2
+  enable: true
+  C: 12.8                      # NWD normalization (px)
+
+pgr:                          # prediction-gated recovery
+  enable: true
+  K: 4                         # candidate-track budget per frame
+  crop_scale: 8.0              # crop side = max(crop_scale * sqrt(area), min_crop)
+  min_crop: 128                # s_min (px)
+  input_size: [640, 640]       # letterbox size of the crop
+  conf_thresh: 0.1             # recovery confidence threshold
+  nms_thresh: 0.65
+  dedup_iou: 0.5               # tau_dedup vs. detections matched this frame
+  double_count_iou: 0.3        # stricter overlap guard vs. matched detections
+  gate_iou: 0.3                # tau_gate on the buffered IoU
+  gate_buffer_ratio: 0.2       # r of BIoU_r
+  fp16: true                   # half precision when the detector runs on CUDA
+
+detector:                     # PGR detector: YOLOX-s fine-tuned on VisDrone-MOT (DynUAV has no training split)
+  exp: configs/detectors/yoloxs_visdrone_mot.py
+  weights: "{WEIGHTS_ROOT}/yoloxs_visdrone_mot.pth"
+
+data:
+  seq_root: "{DATA_ROOT}/DynUAV"          # <seq>/seqinfo.ini, <seq>/img1/
+  det_file: "{DATA_ROOT}/DynUAV/{seq}/det/det.txt"
+  # 11 evaluation sequences (val: 001 014 018 040; test: 004 009 016 027 029 055 067)
+  sequences:
+    - "001"
+    - "004"
+    - "009"
+    - "014"
+    - "016"
+    - "018"
+    - "027"
+    - "029"
+    - "040"
+    - "055"
+    - "067"
